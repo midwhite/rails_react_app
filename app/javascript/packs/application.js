@@ -3,6 +3,7 @@ import ReactDOM  from 'react-dom';
 import PropTypes from 'prop-types';
 
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import $ from './utils';
 
 import './css/app.scss';
 
@@ -25,10 +26,28 @@ class Hello extends React.Component {
 }
 
 class Home extends React.Component {
+  createPost(e){
+    e.preventDefault();
+    $.post({
+      type: "POST",
+      url: "/posts",
+      data: {
+        id: 400,
+        content: "This is a test."
+      },
+      success: (data)=>{
+        console.log(data);
+      }
+    });
+  }
   render(){
     return(
       <div id="home">
         <h1>Home Component</h1>
+        <form id="newPostForm">
+          <input type="file" name="image_file" />
+          <input type="submit" value="Create" onClick={this.createPost.bind(this)} />
+        </form>
         <Links />
       </div>
     );
